@@ -46,11 +46,13 @@ def routeInfo(request):
 				'mode' in request.POST:
 
 			# Check if the route starts or end in NTU by coordinate
-			start = request.POST['start'];
-			end = request.POST['end'];
-			mode = request.POST['mode'];
-			locations = str(search(start, end, mode))
-			print("HAHA")
+			start = request.POST['start']
+			end = request.POST['end']
+			mode = request.POST['mode']
+
+			loc1, loc2, desc1, desc2 = search(start, end, mode)
+			locations = loc1.append(*loc2)
+			# print("HAHA")
 			print(locations)
 			return HttpResponse(locations)
 			# Perform normal search from start until it
