@@ -9,6 +9,25 @@ from datetime import datetime
 
 gmaps = googlemaps.Client(key="AIzaSyAWobQQSUfzzBNhMCALwc3txe1US7F_QQo")
 
+def mass_translate_coordinate_ntu_to_gp(coordinate_list):
+    print(coordinate_list)
+    for i in range(len(coordinate_list)):
+        if float(coordinate_list[i]) < 50:
+            coordinate_list[i] = translate_from_ntumaps_to_googlemaps(coordinate_list[i],"lat")
+        else:
+            coordinate_list[i] = translate_from_ntumaps_to_googlemaps(coordinate_list[i], "long")
+    return coordinate_list
+
+
+def translate_from_ntumaps_to_googlemaps(string, mode):
+    lat_alter = 0.00014436621
+    long_alter = 0.00025890299
+    if mode == "lat":
+        string = float(string) + lat_alter
+    elif mode == "long":
+        string = float(string) - long_alter
+    return repr(string)
+
 
 def get_instruction_from_ntumaps_script(script):
     print("getting direction from NTUMAPS")
@@ -185,7 +204,7 @@ def outside_school_search(start, end, mode="w"):
     # get nearest bus stop
     # googlemaps from outside to nearest bus stop
     # school_school_search(bus_stop, end)
-    return google_extracted, next_partial_result[0][0], google_instructions,next_partial_result[1]
+    return google_extracted, next_partial_result[0], google_instructions, next_partial_result[1]
 
 
 def school_school_search(start, end, mode="please"):
@@ -249,6 +268,7 @@ def school_school_search(start, end, mode="please"):
     locations.append(_locations[2::])
     # print("within school locations:")
     # print(locations)
+    locations[0] = mass_translate_coordinate_ntu_to_gp(locations[0])
     return locations, instructions
 
 
@@ -352,9 +372,11 @@ def crop_text(string, start_regex, end_regex=None, mode="forward"):
 
 
 if __name__ == "__main__":
+    print(mass_translate_coordinate_ntu_to_gp(['1000','10','50']))
+    print(translate_from_ntumaps_to_googlemaps("200","lat"))
     print("start_____________________________________________________________________________________")
-    start = "kembangan mrt"
-    end = "nec"
+    start = "Bus stop outside Canteen 2 (27311)"
+    end = "hall 11"
 
     # get_listed_instructions("http://maps.ntu.edu.sg/m?q=S2&sch_btn=Go&font=+m&t=+Designated+Smoking+Area+2+-+Nanyang+Executive+Centre")
     # print("i return:")

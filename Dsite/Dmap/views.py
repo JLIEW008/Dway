@@ -39,61 +39,61 @@ gmaps = googlemaps.Client(key="AIzaSyBOcaF80s4gu1xTbBxn7uRR9EU0ziTjhOs")
 #     return render(request, 'polls/results.html', {'question': question})
 
 def routeInfo(request):
-	print(request.POST)
-	if request.method == 'POST':
-		if 'start' in request.POST and \
-				'end' in request.POST and \
-				'mode' in request.POST:
+    print(request.POST)
+    if request.method == 'POST':
+        if 'start' in request.POST and \
+                'end' in request.POST and \
+                'mode' in request.POST:
 
-			# Check if the route starts or end in NTU by coordinate
-			start = request.POST['start']
-			end = request.POST['end']
-			mode = request.POST['mode']
+            # Check if the route starts or end in NTU by coordinate
+            start = request.POST['start']
+            end = request.POST['end']
+            mode = request.POST['mode']
 
-			search_result = search(start, end, mode)
-			if len(search_result) == 2:
-				loc1, loc2 = search_result
-			elif len(search_result) == 4:
-				loc1, loc2, desc1, desc2 = search(start, end, mode)
+            search_result = search(start, end, mode)
+            if len(search_result) == 2:
+                loc1, loc2 = search_result
+            elif len(search_result) == 4:
+                loc1, loc2, desc1, desc2 = search(start, end, mode)
 
-			locations = loc1 + loc2
-			# print("HAHA")
-			print(locations)
+            locations = loc1 + loc2
+            # print("HAHA")
+            print(locations)
 
-			return HttpResponse(locations)
-			# Perform normal search from start until it
-			# reaches entrance of NTU
+            return HttpResponse(locations)
+        # Perform normal search from start until it
+        # reaches entrance of NTU
 
-			# if the route start and end at NTU
-			# perform ntu map search
-			# return HttpResponse(str(list))
+        # if the route start and end at NTU
+        # perform ntu map search
+        # return HttpResponse(str(list))
 
-			# to return directions..
-			# return HttpResponse('success')
-		else:
-			return HttpResponse('nope..')
+        # to return directions..
+        # return HttpResponse('success')
+        else:
+            return HttpResponse('nope..')
 
-	else:
-		return HttpResponse('nope..')
+    else:
+        return HttpResponse('nope..')
 
 
 def locInfo(request):
-	print(request.POST)
-	if request.method == 'POST':
-		if 'lat' in request.POST and 'lng' in request.POST:
-			# Todo: Save to server for the latest location
+    print(request.POST)
+    if request.method == 'POST':
+        if 'lat' in request.POST and 'lng' in request.POST:
+            # Todo: Save to server for the latest location
 
-			# Todo: Return previous location if necessary
-			print("Hahahahahah")
-			return HttpResponse('Success')
-		else:
-			return HttpResponse('Failed')
+            # Todo: Return previous location if necessary
+            print("Hahahahahah")
+            return HttpResponse('Success')
+        else:
+            return HttpResponse('Failed')
 
 
 def index(request):
-	context = {'testing': 100}
+    context = {'testing': 100}
 
-	return render(request, 'Dmap/index.html', context)
+    return render(request, 'Dmap/index.html', context)
 
 
 # context = {
@@ -114,19 +114,19 @@ def index(request):
 
 
 def vote(request, question_id):
-	question = get_object_or_404(Question, pk=question_id)
-	try:
-		selected_choice = question.choice_set.get(pk=request.POST['choice'])
-	except (KeyError, Choice.DoesNotExist):
-		# Redisplay the question voting form.
-		return render(request, 'polls/detail.html', {
-			'question': question,
-			'error_message': "You didn't select a choice.",
-		})
-	else:
-		selected_choice.votes += 1
-		selected_choice.save()
-		# Always return an HttpResponseRedirect after successfully dealing
-		# with POST data. This prevents data from being posted twice if a
-		# user hits the Back button.
-		return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
