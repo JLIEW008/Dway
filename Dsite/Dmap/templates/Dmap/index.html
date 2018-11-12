@@ -1,0 +1,52 @@
+{#{% csrf_token %}#}
+<!DOCTYPE html>
+
+{% load static %}
+<script>
+     //Test code to pass variable from django to javascript..
+
+    var testing = {{testing}};
+    console.log(testing);
+    var route_url = "{% url 'Dmap:routeInfo' %}";
+    var loc_url = "{% url 'Dmap:locInfo' %}";
+    {#var csrftoken = Cookies.get('csrftoken');#}
+    {#var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();#}
+
+</script>
+<link rel="stylesheet" type="text/css" href="{% static 'Dmap/style.css' %}">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOcaF80s4gu1xTbBxn7uRR9EU0ziTjhOs&callback=initMap"></script>
+<script language="JavaScript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'Dmap/index.js' %}"></script>
+
+<div id="floating-panel">
+    <b>Start: </b>
+    <input type="text" id="start" value=""><br>
+    <b>End: </b>
+    <input type="text" id="end" value=""><br>
+    <select id="mode">
+        <option value="d">Driving</option>
+        <option value="w">Walking</option>
+        <option value="BICYCLING">Bicycling</option>
+        <option value="b">Transit</option>
+    </select>
+    <input type="button" id="go" value="Go">
+</div>
+<div id="map"></div>
+<script>
+
+    // navigator.geolocation.getCurrentPosition(initMap);
+
+    initMap();
+</script>
+<!--{% if latest_question_list %}-->
+    <!--<ul>-->
+    <!--{% for question in latest_question_list %}-->
+        <!--<li><a href="{% url 'Dmap:detail' question.id %}">{{ question.question_text }}</a></li>-->
+    <!--{% endfor %}-->
+    <!--</ul>-->
+<!--{% else %}-->
+    <!--<p>No polls are available.</p>-->
+<!--{% endif %}-->
+
+
+</html>
