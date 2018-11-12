@@ -107,7 +107,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
         console.log(data);
         result = data.toString();
         console.log(result);
-        result = result.substring(3,result.length - 3);
+        result = result.substring(2,result.length - 2);
         result = result.split(", [['").join();
         console.log(result)
         responseArray = result.split("\', \'");
