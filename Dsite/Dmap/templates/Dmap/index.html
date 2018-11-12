@@ -1,10 +1,7 @@
 {#{% csrf_token %}#}
 <!DOCTYPE html>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 {% load static %}
 <script>
      //Test code to pass variable from django to javascript..
@@ -13,23 +10,11 @@
     console.log(testing);
     var route_url = "{% url 'Dmap:routeInfo' %}";
     var loc_url = "{% url 'Dmap:locInfo' %}";
-<<<<<<< HEAD
-    {#var csrftoken = Cookies.get('csrftoken');#}
-    {#var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();#}
-
-</script>
-<link rel="stylesheet" type="text/css" href="{% static 'Dmap/style.css' %}">
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOcaF80s4gu1xTbBxn7uRR9EU0ziTjhOs&callback=initMap"></script>
-<script language="JavaScript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{% static 'Dmap/index.js' %}"></script>
-
-=======
 
 </script>
 <link rel="stylesheet" type="text/css" href="{% static 'Dmap/style.css' %}">
 <script language="JavaScript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{% static 'Dmap/index.js' %}"></script>
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 <div id="floating-panel">
     <b>Start: </b>
     <input type="text" id="start" value=""><br>
@@ -38,30 +23,17 @@
     <select id="mode">
         <option value="d">Driving</option>
         <option value="w">Walking</option>
-<<<<<<< HEAD
-        <option value="BICYCLING">Bicycling</option>
-=======
         <option value="t">Bicycling</option>
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
         <option value="b">Transit</option>
     </select>
     <input type="button" id="go" value="Go">
 </div>
-<<<<<<< HEAD
-<div id="map"></div>
-<script>
-
-    // navigator.geolocation.getCurrentPosition(initMap);
-
-    initMap();
-=======
 <div id="map" style="width:100%;height:600px"></div>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOcaF80s4gu1xTbBxn7uRR9EU0ziTjhOs&callback=getMap"></script>
 <script>
 
     updatePath();
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 </script>
 <!--{% if latest_question_list %}-->
     <!--<ul>-->
@@ -72,9 +44,4 @@
 <!--{% else %}-->
     <!--<p>No polls are available.</p>-->
 <!--{% endif %}-->
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 </html>

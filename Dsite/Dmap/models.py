@@ -8,13 +8,10 @@ class Question(models.Model):
 	def __str__(self):
 		return self.question_text
 
-<<<<<<< HEAD
-=======
 # class UserLastLocation(models.Model):
 	# user = models.ForeignKey()
 
 
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 
 class Choice(models.Model):
 	question = models.ForeignKey(Question, on_delete=models.CASCADE)

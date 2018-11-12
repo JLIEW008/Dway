@@ -5,13 +5,9 @@ var defaultCenter = {
     lat: 1.343093699999999,
     lng: 103.68089499999999
 };
-<<<<<<< HEAD
-
-=======
 var responseArray = [];
 //var latLngArray = [];
 var route = [];
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setPosition);
@@ -27,22 +23,11 @@ function setPosition(position) {
         lng: position.coords.longitude,
         lat: position.coords.latitude
     }
-<<<<<<< HEAD
-    // console.log("hi")
-    console.log(_location)
-    $.post(loc_url, _location, function(response){
-        // if(response==='success'){ conso}
-        // else{alert("Noooooo");}
-    });
-    // location = _location
-    // console.log("hi")
-=======
     console.log("hi")
     console.log(_location)
     $.post(loc_url, _location, function(response){
 
     });
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 }
 
 
@@ -67,32 +52,14 @@ function initMap() {
             infoWindow.setPosition(pos);
 
             infoWindow.open(map);
-<<<<<<< HEAD
-            map.setCenter(pos)
-            document.getElementById('start').value = pos.lat + "," + pos.lng;
-        }, function () {
-            handleLocationError(true, infoWindow, defaultCenter)
-=======
             map.setCenter(pos);
             document.getElementById('start').value = pos.lat + "," + pos.lng;
         }, function () {
             handleLocationError(true, infoWindow, defaultCenter);
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
         });
     }else{
             handleLocationError(false, infoWindow, defaultCenter);
     }
-<<<<<<< HEAD
-    directionsDisplay.setMap(map)
-
-    var onChangeHandler = function() {
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
-        };
-    document.getElementById('go').addEventListener('click', onChangeHandler);
-
-}
-
-=======
     directionsDisplay.setMap(map);
 
     var onChangeHandler = function() {
@@ -109,17 +76,12 @@ function getMap(){
     };
     map = new google.maps.Map(document.getElementById("map"),mapProp);
 }
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 function calculateAndDisplayRoute(directionsService, directionsDisplay){
     /*Check if there is any error..*/
 
     /*Todo: Add checks on the restriction of the place.*/
 
-<<<<<<< HEAD
-    console.log("calculateAndDisplayRoute")
-=======
     console.log("calculateAndDisplayRoute");
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var mode = document.getElementById('mode').value;
@@ -131,50 +93,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
     };
     //Send start, end and mode to the server..
 
-<<<<<<< HEAD
-    $.post(route_url, data, function(response){
-        if(response==='success'){ alert("Yay!");}
-        else{alert("Noooooo");}
-    });
-
-
-    var searchFromNTUtoNTU = false;
-    if (!searchFromNTUtoNTU) {
-        directionsService.route({
-                origin: start,
-                destination: end,
-                travelMode: mode
-            },
-            function (response, status) {
-                if (status === 'OK') {
-                    directionsDisplay.setDirections(response);
-                } else {
-                    window.alert('Directions request failed due to ' + status);
-                }
-            }
-        )
-    } else{
-        //Perform search from NTU website..
-
-    }
-
-}
-function checkLocationNTU(location){
-    /*The app should only work for search that starts with or
-    end with NTU.
-
-
-    * */
-
-}
-function getLastBusStop(response){
-    /* A regex search to be implemented to search for last bus
-    stop
-     */
-}
-
-
-=======
 //    $.post(route_url, data, function(response){
 //
 //        asyncWait();
@@ -286,7 +204,6 @@ function updatePath(){
 function removePath(){
     route.setMap(null);
 }
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 
 
 //request for location
@@ -295,8 +212,5 @@ getLocation();
 //
 
 console.log("okay so far..")
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
