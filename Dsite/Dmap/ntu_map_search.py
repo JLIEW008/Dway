@@ -9,6 +9,7 @@ from datetime import datetime
 
 gmaps = googlemaps.Client(key="AIzaSyAWobQQSUfzzBNhMCALwc3txe1US7F_QQo")
 
+<<<<<<< HEAD
 
 def get_instruction_from_google_script(script):
     print("GETTING DIRECTION FROM GOOGLE")
@@ -50,6 +51,22 @@ def get_listed_instructions(url):
         # print(instruction)
         instruction_list.append(instruction)
     # print(instruction_list)
+=======
+def get_listed_instructions(url):
+    instruction_list = []
+    url_script = requests.get(url).text
+    print(url_script)
+    index = 0
+    while "<li>" in url_script:
+
+        url_script = crop_text(url_script,"<li>")
+        # print(url_script)
+        instruction = crop_text(url_script,"<div class=\"r\">","</div")
+        # print("instructions are:")
+        # print(instruction)
+        instruction_list.append(instruction)
+    print(instruction_list)
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 
 
 def get_map_coordinates(location_url):
@@ -144,11 +161,17 @@ def outside_school_search(start, end, mode="w"):
     directions_result = gmaps.directions(start,
                                          bob,
                                          mode="transit",
+<<<<<<< HEAD
                                          departure_time=1542017449)
     directions_result = str(directions_result)
     google_instructions = get_instruction_from_google_script(directions_result)
 
     # print(directions_result)
+=======
+                                         departure_time=now)
+    directions_result = str(directions_result)
+
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     best_bus_stop = crop_text_backwards(directions_result, "arrival_stop", "arrival_time")
     # print(best_bus_stop)
     best_bus_stop = crop_text(best_bus_stop, "'name':", "}")
@@ -162,9 +185,13 @@ def outside_school_search(start, end, mode="w"):
     next_partial_result = search(best_bus_stop, end, mode)
 
     p = re.compile("[0-9]{1,3}[.][0-9]{3,11}")
+<<<<<<< HEAD
     directions_to_bus_stop_script = crop_text(directions_result, "'", best_bus_stop)
     # print(directions_to_bus_stop_script)
     google_extracted = p.findall(directions_to_bus_stop_script)
+=======
+    google_extracted = p.findall(directions_result)
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     # print("extracted from google")
     # print(google_extracted)
 
@@ -173,7 +200,11 @@ def outside_school_search(start, end, mode="w"):
     # get nearest bus stop
     # googlemaps from outside to nearest bus stop
     # school_school_search(bus_stop, end)
+<<<<<<< HEAD
     return google_extracted, google_instructions, next_partial_result
+=======
+    return google_extracted,next_partial_result
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
 
 
 def school_school_search(start, end, mode="please"):
@@ -197,7 +228,11 @@ def school_school_search(start, end, mode="please"):
     # print(from_text)
     # print(cropped_search_url_script)
     # print(mode)
+<<<<<<< HEAD
     # mode = "fuck you"
+=======
+    #mode = "fuck you"
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     better_url = "http://maps.ntu.edu.sg/m?q=" + from_text.replace(" ", "%20") + "%20to%20" + to_text.replace(" ", \
                                                                                                               "%20") + "&d=" + mode + "&fs=m"
     # print("better url is:")
@@ -211,7 +246,10 @@ def school_school_search(start, end, mode="please"):
 
     # result_url = "http://maps.ntu.edu.sg/m?q=School%20of%20Biological%20Sciences%20(SBS)%20to%20Nanyang%20Executive%20Centre%20(NEC)&d=w&fs=m"
     result_url = "http://maps.ntu.edu.sg/m?q=Hall%20of%20Residence%202%20(Hall%202)%20to%20Nanyang%20Executive%20Centre%20(NEC)&d=d&fs=m"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     overall_route_response = requests.get(better_url)
     # print(overall_route_response.text)
     start_of_first_route = crop_text(overall_route_response.text, 'id=d ')
@@ -219,12 +257,18 @@ def school_school_search(start, end, mode="please"):
     # print(start_of_first_route)
 
     first_route_url = crop_text(start_of_first_route, 'a href="', '"')
+<<<<<<< HEAD
 
     # print(first_route_url)
     # print("within school url with map")
     # print("http://maps.ntu.edu.sg" + first_route_url)
     first_route_response = requests.get("http://maps.ntu.edu.sg" + first_route_url)
     # print(first_route_response.text)
+=======
+    # print("within school url with map")
+    # print("http://maps.ntu.edu.sg" + first_route_url)
+    first_route_response = requests.get("http://maps.ntu.edu.sg" + first_route_url)
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     # limit it to the gothere.sg image
     first_route_gothere_img = crop_text(first_route_response.text, "gothere.sg", "width")
     # print("crop_text_output:")
@@ -280,7 +324,11 @@ def get_paths(route_response):
 
     p = re.compile("[0-9]{1,3}[.][0-9]{3,11}")
     locations = p.findall(route_response)
+<<<<<<< HEAD
     # print(locations)
+=======
+    print(locations)
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     # remove first location as it is duplicated with the second location
     locations = locations[2::]
 
@@ -293,11 +341,18 @@ def get_paths(route_response):
 # 	# for each
 
 def crop_text_backwards(string, start_regex, end_regex):
+<<<<<<< HEAD
     past = string
     while start_regex in string:
         past = string
         string = crop_text(string, start_regex)
         # print(past)
+=======
+    while start_regex in string:
+        past = string
+        string = crop_text(string, start_regex)
+    # print(past)
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
     return crop_text(past, start_regex, end_regex)
 
 
@@ -340,6 +395,7 @@ def crop_text(string, start_regex, end_regex=None, mode="forward"):
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     print("start_____________________________________________________________________________________")
     start = "pioneer mrt"
     end = "nec"
@@ -347,3 +403,11 @@ if __name__ == "__main__":
     # print("i return:")
     print(search(start, end, "w"))
     # get_instruction_from_google_script("")
+=======
+    print("start")
+    start = "pasir ris"
+    end = "NEC"
+    #get_listed_instructions("http://maps.ntu.edu.sg/m?q=S2&sch_btn=Go&font=+m&t=+Designated+Smoking+Area+2+-+Nanyang+Executive+Centre")
+    # print("i return:")
+    print(search(start, end, "b"))
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1

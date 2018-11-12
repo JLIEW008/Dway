@@ -14,10 +14,18 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Python 3.6 (Dway)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="@types/googlemaps" level="application" />
     <orderEntry type="library" name="@types/js-cookie" level="application" />
+=======
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="@types/googlemaps" level="application" />
+    <orderEntry type="library" name="@types/js-cookie" level="application" />
+    <orderEntry type="library" name="googlemaps" level="project" />
+>>>>>>> 3bb0cd3da905fa9676cd51bfd60e9b4f52616be1
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
