@@ -4,10 +4,9 @@ from django.template import loader
 from django.urls import reverse
 from django.views import generic
 
-from .models import Question, Choice
 from .ntu_map_search import *
 import googlemaps
-
+from .models import *
 gmaps = googlemaps.Client(key="AIzaSyBOcaF80s4gu1xTbBxn7uRR9EU0ziTjhOs")
 
 
