@@ -50,10 +50,16 @@ def routeInfo(request):
 			end = request.POST['end']
 			mode = request.POST['mode']
 
-			loc1, loc2, desc1, desc2 = search(start, end, mode)
-			locations = loc1.append(*loc2)
+			search_result = search(start, end, mode)
+			if len(search_result) == 2:
+				loc1, loc2 = search_result
+			elif len(search_result) == 4:
+				loc1, loc2, desc1, desc2 = search(start, end, mode)
+
+			locations = loc1 + loc2
 			# print("HAHA")
 			print(locations)
+
 			return HttpResponse(locations)
 			# Perform normal search from start until it
 			# reaches entrance of NTU

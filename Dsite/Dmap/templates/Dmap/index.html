@@ -1,36 +1,49 @@
 {#{% csrf_token %}#}
-
 <!DOCTYPE html>
 
 
 {% load static %}
-<script>
-     //Test code to pass variable from django to javascript..
+<head>
+    <script>
+         //Test code to pass variable from django to javascript..
+        var testing = {{testing}};
+        console.log(testing);
+        var route_url = "{% url 'Dmap:routeInfo' %}";
+        var loc_url = "{% url 'Dmap:locInfo' %}";
 
-    var testing = {{testing}};
-    console.log(testing);
-    var route_url = "{% url 'Dmap:routeInfo' %}";
-    var loc_url = "{% url 'Dmap:locInfo' %}";
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-</script>
-<link rel="stylesheet" type="text/css" href="{% static 'Dmap/style.css' %}">
-<script language="JavaScript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{% static 'Dmap/index.js' %}"></script>
-<div id="floating-panel">
-    <b>Start: </b>
-    <input type="text" id="start" value=""><br>
-    <b>End: </b>
-    <input type="text" id="end" value=""><br>
-    <select id="mode">
-        <option value="d">Driving</option>
-        <option value="w">Walking</option>
-        <option value="t">Bicycling</option>
-        <option value="b">Transit</option>
-    </select>
-    <input type="button" id="go" value="Go">
-</div>
-<div id="map" style="width:100%;height:600px"></div>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'Dmap/style.css' %}">-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script language="JavaScript"  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'Dmap/index.js' %}"></script>
+
+
+</head>
+<body>
+    <div class="container">
+        <div id="floating-panel">
+            <b>Start: </b>
+            <input type="text" id="start" value=""><br>
+            <b>End: </b>
+            <input type="text" id="end" value=""><br>
+            <select id="mode">
+                <option value="d">Driving</option>
+                <option value="w">Walking</option>
+                <option value="t">Bicycling</option>
+                <option value="b">Transit</option>
+            </select>
+            <input type="button" id="go" value="Go">
+
+        </div>
+        <div id="map" style="width:100%;height:600px"></div>
+    </div>
+</body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOcaF80s4gu1xTbBxn7uRR9EU0ziTjhOs&callback=getMap"></script>
 <script>
 
