@@ -12,6 +12,9 @@
         var route_url = "{% url 'Dmap:routeInfo' %}";
         var loc_url = "{% url 'Dmap:locInfo' %}";
 
+
+
+
     </script>
 
 
@@ -29,21 +32,71 @@
 </head>
 <body>
     <div class="container">
-        <div id="floating-panel">
-            <b>Start: </b>
-            <input type="text" id="start" value=""><br>
-            <b>End: </b>
-            <input type="text" id="end" value=""><br>
-            <select id="mode">
-                <option value="d">Driving</option>
-                <option value="w">Walking</option>
-                <option value="t">Bicycling</option>
-                <option value="b">Transit</option>
-            </select>
-            <input type="button" id="go" value="Go">
+        <form>
+        <!--<div id="floating-panel">-->
+            <div class="row">
+                <div class="col-6">
+                    <!--<label for="start">Start Location</label>-->
+                    <input type="text" class="form-control" id="start" value="" placeholder="Start Location">
+                </div>
+                <div class="col-6">
+                    <!--<label for="end">End Location</label>-->
+                    <input type="text" class="form-control" id="end" value="" placeholder="End Location">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                <label for="mode">Mode of transport</label>
+                <select class="form-control" id="mode">
+                    <option value="d">Driving</option>
+                    <option value="w">Walking</option>
+                    <option value="t">Bicycling</option>
+                    <option value="b">Transit</option>
+                </select>
+                </div>
+                <div class="col-4">
+                    <br>
+                    <input class="form-control" type="button" id="go" value="Go">
+                </div>
+            </div>
+        </form>
+        <!--</div>-->
+        <br>
+        <div id="map" style="width:100%;height:400px"></div>
 
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <img class="card-img-top img-thumbnail rounded" src="{% static 'Dmap\images\NDC_to_NH\1.351272,103.688468.jpeg' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <img class="card-img-top img-thumbnail rounded" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <img class="card-img-top img-thumbnail rounded" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="map" style="width:100%;height:600px"></div>
     </div>
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOcaF80s4gu1xTbBxn7uRR9EU0ziTjhOs&callback=getMap"></script>
