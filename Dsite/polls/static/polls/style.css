@@ -1,0 +1,8 @@
+li a:link {
+    color: green;
+    text-decoration: none;
+}
+
+body {
+    background: white url("images/pikachu.jpg") no-repeat;
+}
