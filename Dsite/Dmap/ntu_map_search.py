@@ -12,30 +12,46 @@ gmaps = googlemaps.Client(key="AIzaSyAWobQQSUfzzBNhMCALwc3txe1US7F_QQo")
 
 def get_key_landmarks(directions_list):
     direction_string = " ".join(directions_list)
-    landmarks_list = []
-    landmarks_coordinates = []
+    landmarks = ""
+    landmarks_coordinates =""
     if direction_string.find("Carpark 2") == -1 and direction_string.find("NIE") > -1:
-        landmarks_list.append("nie_bridge")
-        landmarks_coordinates.append(1.347841)
-        landmarks_coordinates.append(103.680652)
+        landmarks = landmarks+"nie_bridge,"
+        landmarks_coordinates = landmarks_coordinates +"1.347841,103.680652,"
+        # landmarks_list.append("nie_bridge")
+        # landmarks_coordinates.append(1.347841)
+        # landmarks_coordinates.append(103.680652)
     if direction_string.find("South Spine") > -1 and direction_string.find(
             "North Spine") > -1 and direction_string.find("North Spine") < direction_string.find("South Spine"):
-        landmarks_list.append("south_to_north_spine_lift")
-        landmarks_coordinates.append(1.34385336621)
-        landmarks_coordinates.append(103.68079609701)
+        landmarks = landmarks+"south_to_north_spine_lift,"
+        landmarks_coordinates = landmarks_coordinates +"1.34385336621,103.68079609701,"
+        # landmarks_list.append("south_to_north_spine_lift")
+        # landmarks_coordinates.append(1.34385336621)
+        # landmarks_coordinates.append(103.68079609701)
     if direction_string.find("School of Civil and Environmental Engineering") > -1:
-        landmarks_list.append("CEE_door")
-        landmarks_coordinates.append(1.34583436621)
-        landmarks_coordinates.append(103.68053609701)
+        landmarks = landmarks+"CEE_door,"
+        landmarks_coordinates = landmarks_coordinates +"1.34583436621,103.68053609701,"
+        # landmarks_list.append("CEE_door")
+        # landmarks_coordinates.append(1.34583436621)
+        # landmarks_coordinates.append(103.68053609701)
     if direction_string.find("South Spine") > -1:
-        landmarks_list.append("South_Spine_carpark")
-        landmarks_coordinates.append(1.34323336621)
-        landmarks_coordinates.append(103.68146009701)
+        landmarks = landmarks+"South_Spine_carpark,"
+        landmarks_coordinates = landmarks_coordinates +"1.34323336621,103.68146009701,"
+        # landmarks_list.append("South_Spine_carpark")
+        # landmarks_coordinates.append(1.34323336621)
+        # landmarks_coordinates.append(103.68146009701)
     if direction_string.find("South Spine") > -1 and direction_string.find("Continue on North Spin") > -1:
-        landmarks_list.append("coffee_bean")
-        landmarks_coordinates.append(1.344184)
-        landmarks_coordinates.append(103.680801)
-    return landmarks_list[0:3], landmarks_coordinates[0:6]
+        landmarks = landmarks + "coffee_bean,"
+        landmarks_coordinates = landmarks_coordinates + "1.344184,103.680801,"
+        # landmarks_list.append("coffee_bean")
+        # landmarks_coordinates.append(1.344184)
+        # landmarks_coordinates.append(103.680801)
+    if len(landmarks) > 0:
+        landmarks = landmarks[:-1]
+    if len(landmarks_coordinates) > 0:
+        landmarks_coordinates = landmarks_coordinates[:-1]
+
+
+    return landmarks, landmarks_coordinates
 
 
 def mass_translate_coordinate_ntu_to_gp(coordinate_list):
@@ -206,6 +222,7 @@ def outside_school_search(start, end, mode="w"):
                                          bob,
                                          mode="transit",
                                          departure_time=1542017449)
+
     directions_result = str(directions_result)
     print(directions_result)
     google_instructions = get_instruction_from_google_script(directions_result)
@@ -411,7 +428,7 @@ if __name__ == "__main__":
     print(translate_from_ntumaps_to_googlemaps("200", "lat"))
     print("start_____________________________________________________________________________________")
     start = "s1"
-    end = "s2"
+    end = "nie"
 
     # get_listed_instructions("http://maps.ntu.edu.sg/m?q=S2&sch_btn=Go&font=+m&t=+Designated+Smoking+Area+2+-+Nanyang+Executive+Centre")
     # print("i return:")
