@@ -9,6 +9,26 @@ from datetime import datetime
 
 gmaps = googlemaps.Client(key="AIzaSyAWobQQSUfzzBNhMCALwc3txe1US7F_QQo")
 
+
+def get_key_landmarks(directions_list):
+    direction_string =" ".join(directions_list)
+    landmarks_list = []
+    landmarks_coordinates = []
+    if direction_string.find("carpark 2")> -1 and direction_string.find("nie")> -1:
+        landmarks_list.append("nie bridge is a key landmark")
+        landmarks_coordinates.append("1.34756436621, 103.67948109701")
+    if direction_string.find("South Spine")> -1 and direction_string.find("North Spine")> -1:
+        landmarks_list.append("south to north spine lift")
+        landmarks_coordinates.append("1.34385336621, 103.68079609701")
+    if direction_string.find("School of Civil and Environmental Engineering")> -1:
+        landmarks_list.append("CEE door")
+        landmarks_coordinates.append("1.34583436621, 103.68053609701")
+    if direction_string.find("South Spine")> -1:
+        landmarks_list.append("South Spine carpark")
+        landmarks_coordinates.append("1.34323336621, 103.68146009701")
+    return landmarks_list[0:3],landmarks_coordinates[0:3]
+
+
 def mass_translate_coordinate_ntu_to_gp(coordinate_list):
     print(coordinate_list)
     for i in range(len(coordinate_list)):
@@ -178,6 +198,7 @@ def outside_school_search(start, end, mode="w"):
                                          mode="transit",
                                          departure_time=1542017449)
     directions_result = str(directions_result)
+    print(directions_result)
     google_instructions = get_instruction_from_google_script(directions_result)
     best_bus_stop = crop_text_backwards(directions_result, "arrival_stop", "arrival_time")
     # print(best_bus_stop)
@@ -196,6 +217,9 @@ def outside_school_search(start, end, mode="w"):
     # print(directions_to_bus_stop_script)
     google_extracted = p.findall(directions_to_bus_stop_script)
 
+    print("GOOOOOOOOOOOOOOOGLE COORINDATE")
+    print(google_extracted)
+
     # print("extracted from google")
     # print(google_extracted)
 
@@ -204,7 +228,7 @@ def outside_school_search(start, end, mode="w"):
     # get nearest bus stop
     # googlemaps from outside to nearest bus stop
     # school_school_search(bus_stop, end)
-    return google_extracted, next_partial_result[0], google_instructions, next_partial_result[1]
+    return google_extracted + next_partial_result[0], google_instructions + next_partial_result[1]
 
 
 def school_school_search(start, end, mode="please"):
@@ -269,7 +293,9 @@ def school_school_search(start, end, mode="please"):
     # print("within school locations:")
     # print(locations)
     locations[0] = mass_translate_coordinate_ntu_to_gp(locations[0])
-    return locations, instructions
+    print("checking type of data deturn")
+    print(type(locations[0]))
+    return locations[0], instructions
 
 
 def find_first_route_url(url):
@@ -375,10 +401,14 @@ if __name__ == "__main__":
     print(mass_translate_coordinate_ntu_to_gp(['1000','10','50']))
     print(translate_from_ntumaps_to_googlemaps("200","lat"))
     print("start_____________________________________________________________________________________")
-    start = "Bus stop outside Canteen 2 (27311)"
-    end = "hall 11"
+    start = "pioneer mrt"
+    end = "cee"
 
     # get_listed_instructions("http://maps.ntu.edu.sg/m?q=S2&sch_btn=Go&font=+m&t=+Designated+Smoking+Area+2+-+Nanyang+Executive+Centre")
     # print("i return:")
-    print(search(start, end, "w"))
+    output = search(start, end, "w")
+    print(output[1])
+    print(type(output[1]))
+    print(get_key_landmarks(output[1]));
+
     # get_instruction_from_google_script("")

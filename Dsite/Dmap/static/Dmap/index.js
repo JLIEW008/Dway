@@ -104,13 +104,15 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
     //Todo: Add buffer screen while waiting for result..
     console.log("Getting route from the server..")
     $.post(route_url, data).done(function(data){
-        console.log(data);
+        console.log(typeof data);
         result = data.toString();
+        console.log("Here")
         console.log(result);
-        result = result.substring(2,result.length - 2);
-        result = result.split(", [['").join();
-        console.log(result)
-        responseArray = result.split("\', \'");
+        //result = result.substring(2,result.length - 2);
+        //result = result.split(", [['").join();
+        //console.log(result)
+        //responseArray = result.split("\', \'");
+        responseArray = result.split(",");
         console.log(responseArray);
 
 

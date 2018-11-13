@@ -50,14 +50,22 @@ def routeInfo(request):
             mode = request.POST['mode']
 
             search_result = search(start, end, mode)
-            if len(search_result) == 2:
-                loc1, loc2 = search_result
-            elif len(search_result) == 4:
-                loc1, loc2, desc1, desc2 = search(start, end, mode)
+            # if len(search_result) == 2:
+            #     loc1, loc2 = search_result
+            # elif len(search_result) == 4:
+            #     loc1, loc2, desc1, desc2 = search(start, end, mode)
 
-            locations = loc1 + loc2
+            # locations = loc1 + loc2
+            print("type from view22")
+            locations = search_result[0]
+            print(type(locations))
             # print("HAHA")
             print(locations)
+            locations = ",".join(locations)
+
+            print("after concantenation")
+            print(locations)
+            print(type(locations))
 
             return HttpResponse(locations)
         # Perform normal search from start until it
