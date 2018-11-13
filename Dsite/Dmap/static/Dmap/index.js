@@ -8,9 +8,54 @@ var defaultCenter = {
 var responseArray = [];
 var landmarks_name = [];
 var landmarks_coordinates= [];
+var landmarks_labels =[];
 var my_position;
 //var latLngArray = [];
 var route = [];
+
+//initialization part
+// if (str.length == 0) {
+
+        // return;
+function hide_cards(){
+    document.getElementById("card_segment").innerHTML = " ";
+}
+function card(img_url, card_title){
+    var string = '<div class="col-sm-4">';
+    string += '<div class="card">';
+    string += '<img class="card-img-top img-thumbnail rounded" src=' + img_url + '>';
+    string +=   '<div class="card-body">';
+    string +=       '<h5 class="card-title">' + card_title + '</h5>';
+    string +=   '</div>';
+    string += '</div></div>';
+    return string;
+}
+function show_cards(){
+
+    // var image_url ="{% static 'Dmap/images/NDC_to_NH/1.351272,103.688468.jpeg' %}";
+    // var image_url = '/static/Dmap/images/NDC_to_NH/1.351272,103.688468.jpeg';
+    var base_url = '/static/Dmap/images/Key_landmarks/';
+    var ext = ".jpg";
+    var length = landmarks_name.length;
+    var no_cards = Math.min(length,3 );
+    console.log("getting cards information");
+    var full_html = "";
+
+
+    for(var i=0; i < no_cards; i++) {
+        title = landmarks_name[i];
+        title_name = landmarks_labels[i] + ": " + title.replace(/_/g, ' ');
+        string = card(base_url + title + ext, title_name);
+
+        console.log(string);
+        full_html += string;
+        // console.log(base_url + title + ext);
+    }
+
+    console.log("end of cards information");
+    document.getElementById("card_segment").innerHTML =full_html;
+}
+
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setPosition);
@@ -126,57 +171,28 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
         // console.log("Here")
         console.log(result);
 
-        response = result.split('l');
+        response = result.split('*');
         responseArray = response[0];
-
+        responseArray = responseArray.split(",");
+        console.log(responseArray);
+        //
+        //
         landmarks = response[1];
-        console.log(landmarks);
-        landmarks= landmarks.split('lc');
+        // console.log(landmarks);
+        landmarks= landmarks.split('&');
 
         landmarks_name = landmarks[0];
+        landmarks_name =  landmarks_name.split(",");
+        console.log(landmarks_name);
         landmarks_coordinates = landmarks[1];
-
-        responseArray = result.split(",");
-
-        landmarksArray = result.split(",");
-        console.log(responseArray);
+        landmarks_coordinates = landmarks_coordinates.split(",");
+        console.log(landmarks_coordinates);
+        // responseArray = result.split(",");
 
 
-//        console.log(result)
-//        result = result.substring(2,result.length - 2);
-//        console.log(result)
-//        result = result.replace("[", "");
-//        result = result.replace("[", "");
-//        console.log(result);
-//        result = result.replace("]", "");
-//        result = result.replace("]", "");
-//        console.log(result);
-
-//        console.log(result);
-//        result = result.split(" ", "").join();
-//        console.log(result)
-//        result = result.split("'").join();
-//        console.log(result);
-//        result = result.split(",");
-//        result = result.split(",")
-//        console.log(result);
-//        result = result.filter(Boolean);
-//        result = result.filter(" ");
-//        console.log(result);
-//        responseArray = result;
-//        result = result.split(" ").join();
-//        console.log(result);
-//        result = result.split(",");
-//        console.log(result);
-//        responseArray = result;
-//        p = re.compile("")
-//        var re = /[0-9]{1,3}[.][0-9]{3,11}*/g;
-//        console.log(result)
-//        responseArray = re.exec(result);
-//        console.log(responseArray);
-//        console.log(responseArray);
-//        responseArray = result.split('\',\'');
-//        console.log(result)
+        // responseArray = result.split(",");
+        // console.log(responseArray);
+        updateLandmark();
         updatePath();
     });
 
@@ -188,11 +204,34 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
 
 
 }
-function setMarker(position){
+
+function updateLandmark(){
+    console.log("Updating landmark locations..");
+    var _length = landmarks_name.length;
+    console.log(_length);
+    var label_char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    // console.log(first_char);
+    for(var i = 0; i < _length; i++){
+        console.log(i);
+        var _lat = parseFloat(landmarks_coordinates[i*2]);
+        var _lng = parseFloat(landmarks_coordinates[i*2+1]);
+        console.log(_lat);
+        console.log(_lng);
+        landmarks_labels[i] = label_char[i%label_char.length];
+        console.log(landmarks_labels[i]);
+        var marker = new google.maps.Marker({
+            position: {lat: _lat, lng: _lng},
+            title: landmarks_name[i],
+            label: label_char[i%label_char.length],
+            map: map
+        });
+        console.log(i);
+    }
+
+    show_cards();
 
 
 }
-
 function updatePath(){
     if(route.length != 0){
         removePath();
@@ -213,7 +252,7 @@ function updatePath(){
     var max_lat = -200, max_lng=-200;
 
     for(var i = 0; i < length; i += 2) {
-        console.log(responseArray[i])
+        // console.log(responseArray[i])
         var _lat = parseFloat(responseArray[i]);
         var _lng = parseFloat(responseArray[i+1]);
 
@@ -223,8 +262,8 @@ function updatePath(){
         if(max_lng < _lng){max_lng = _lng;}
 
 
-        console.log(_lat);
-        console.log(_lng);
+        // console.log(_lat);
+        // console.log(_lng);
         var _latlng = {lat:_lat, lng:_lng};
         latlng = new google.maps.LatLng(_latlng);
         path.push(latlng);
@@ -242,6 +281,7 @@ function updatePath(){
         var bounds = new google.maps.LatLngBounds(southWestBound, northEastBound);
         map.fitBounds(bounds);
     }   // var marker = new google.maps.Marker({
+
     //     position: defaultCenter,
     //     title: "LALALA" + path.getLength(),
     //     map: map
