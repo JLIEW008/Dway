@@ -6,6 +6,9 @@ var defaultCenter = {
     lng: 103.68089499999999
 };
 var responseArray = [];
+var landmarks_name = [];
+var landmarks_coordinates= [];
+var my_position;
 //var latLngArray = [];
 var route = [];
 function getLocation() {
@@ -41,18 +44,32 @@ function initMap() {
             center:defaultCenter,
             zoom:30
         });
-    infoWindow = new google.maps.InfoWindow;
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            var marker = new google.maps.Marker({
+                position: pos,
+                title: "Current Location",
+                map: map
+            });
 
-            infoWindow.setPosition(pos);
-
-            infoWindow.open(map);
+            my_position = pos;
+            // infoWindow.setPosition(pos);
+            //
+            // infoWindow.open(map);
             map.setCenter(pos);
+            min_lat = pos.lat - 0.0001;
+            min_lng = pos.lng - 0.0001;
+            max_lat = pos.lat + 0.0001;
+            max_lng = pos.lng + 0.0001;
+            var southWestBound = new google.maps.LatLng(min_lat, min_lng);
+            var northEastBound = new google.maps.LatLng(max_lat, max_lng);
+
+            var bounds = new google.maps.LatLngBounds(southWestBound, northEastBound);
+            map.fitBounds(bounds);
             document.getElementById('start').value = pos.lat + "," + pos.lng;
         }, function () {
             handleLocationError(true, infoWindow, defaultCenter);
@@ -106,13 +123,22 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
     $.post(route_url, data).done(function(data){
         console.log(typeof data);
         result = data.toString();
-        console.log("Here")
+        // console.log("Here")
         console.log(result);
-        //result = result.substring(2,result.length - 2);
-        //result = result.split(", [['").join();
-        //console.log(result)
-        //responseArray = result.split("\', \'");
+
+        response = result.split('l');
+        responseArray = response[0];
+
+        landmarks = response[1];
+        console.log(landmarks);
+        landmarks= landmarks.split('lc');
+
+        landmarks_name = landmarks[0];
+        landmarks_coordinates = landmarks[1];
+
         responseArray = result.split(",");
+
+        landmarksArray = result.split(",");
         console.log(responseArray);
 
 
@@ -162,7 +188,10 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
 
 
 }
+function setMarker(position){
 
+
+}
 
 function updatePath(){
     if(route.length != 0){
@@ -179,10 +208,20 @@ function updatePath(){
     route.setMap(map);
     var path = route.getPath();
     var length = responseArray.length;
+
+    var min_lat = 200, min_lng=200;
+    var max_lat = -200, max_lng=-200;
+
     for(var i = 0; i < length; i += 2) {
         console.log(responseArray[i])
         var _lat = parseFloat(responseArray[i]);
         var _lng = parseFloat(responseArray[i+1]);
+
+        if(min_lat > _lat){min_lat = _lat;}
+        if(min_lng > _lng){min_lng = _lng;}
+        if(max_lat < _lat){max_lat = _lat;}
+        if(max_lng < _lng){max_lng = _lng;}
+
 
         console.log(_lat);
         console.log(_lng);
@@ -193,12 +232,20 @@ function updatePath(){
 //    console.log(path)
     route.setPath(path);
     route.setMap(map);
+    if (length !=0){
+        //If there is no route information (initial case)
+        console.log(min_lng);
+        console.log(max_lng);
+        var southWestBound = new google.maps.LatLng(min_lat, min_lng);
+        var northEastBound = new google.maps.LatLng(max_lat, max_lng);
 
-    var marker = new google.maps.Marker({
-        position: defaultCenter,
-        title: "LALALA" + path.getLength(),
-        map: map
-    });
+        var bounds = new google.maps.LatLngBounds(southWestBound, northEastBound);
+        map.fitBounds(bounds);
+    }   // var marker = new google.maps.Marker({
+    //     position: defaultCenter,
+    //     title: "LALALA" + path.getLength(),
+    //     map: map
+    // });
     google.maps.event.trigger(map, 'resize');
 
 }

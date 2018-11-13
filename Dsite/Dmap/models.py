@@ -9,6 +9,7 @@ from django.db import models
 
 class PictureLocation(models.Model):
 	url = models.CharField(max_length=200)
+	name = models.CharField(max_length=200)
 	lat = models.FloatField(max_length=200)
 	lng = models.FloatField(max_length=200)
 
