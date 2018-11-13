@@ -11,32 +11,38 @@ gmaps = googlemaps.Client(key="AIzaSyAWobQQSUfzzBNhMCALwc3txe1US7F_QQo")
 
 
 def get_key_landmarks(directions_list):
-    direction_string =" ".join(directions_list)
+    direction_string = " ".join(directions_list)
     landmarks_list = []
     landmarks_coordinates = []
-    if direction_string.find("carpark 2")== -1 and direction_string.find("NIE")> -1:
-        landmarks_list.append("nie bridge is a key landmark")
-        landmarks_coordinates.append("1.347841,103.680652")
-    if direction_string.find("South Spine")> -1 and direction_string.find("North Spine")> -1:
-        landmarks_list.append("south to north spine lift")
-        landmarks_coordinates.append("1.34385336621, 103.68079609701")
-    if direction_string.find("School of Civil and Environmental Engineering")> -1:
-        landmarks_list.append("CEE door")
-        landmarks_coordinates.append("1.34583436621, 103.68053609701")
-    if direction_string.find("South Spine")> -1:
-        landmarks_list.append("South Spine carpark")
-        landmarks_coordinates.append("1.34323336621, 103.68146009701")
-    if direction_string.find("South Spine") > -1 and direction_string.find("Continue on North Spin")> -1 :
-        landmarks_list.append("coffe bean")
-        landmarks_coordinates.append("later")
-    return landmarks_list[0:3],landmarks_coordinates[0:3]
+    if direction_string.find("Carpark 2") == -1 and direction_string.find("NIE") > -1:
+        landmarks_list.append("nie_bridge")
+        landmarks_coordinates.append(1.347841)
+        landmarks_coordinates.append(103.680652)
+    if direction_string.find("South Spine") > -1 and direction_string.find(
+            "North Spine") > -1 and direction_string.find("North Spine") < direction_string.find("South Spine"):
+        landmarks_list.append("south_to_north_spine_lift")
+        landmarks_coordinates.append(1.34385336621)
+        landmarks_coordinates.append(103.68079609701)
+    if direction_string.find("School of Civil and Environmental Engineering") > -1:
+        landmarks_list.append("CEE_door")
+        landmarks_coordinates.append(1.34583436621)
+        landmarks_coordinates.append(103.68053609701)
+    if direction_string.find("South Spine") > -1:
+        landmarks_list.append("South_Spine_carpark")
+        landmarks_coordinates.append(1.34323336621)
+        landmarks_coordinates.append(103.68146009701)
+    if direction_string.find("South Spine") > -1 and direction_string.find("Continue on North Spin") > -1:
+        landmarks_list.append("coffee_bean")
+        landmarks_coordinates.append(1.344184)
+        landmarks_coordinates.append(103.680801)
+    return landmarks_list[0:3], landmarks_coordinates[0:6]
 
 
 def mass_translate_coordinate_ntu_to_gp(coordinate_list):
     print(coordinate_list)
     for i in range(len(coordinate_list)):
         if float(coordinate_list[i]) < 50:
-            coordinate_list[i] = translate_from_ntumaps_to_googlemaps(coordinate_list[i],"lat")
+            coordinate_list[i] = translate_from_ntumaps_to_googlemaps(coordinate_list[i], "lat")
         else:
             coordinate_list[i] = translate_from_ntumaps_to_googlemaps(coordinate_list[i], "long")
     return coordinate_list
@@ -401,10 +407,10 @@ def crop_text(string, start_regex, end_regex=None, mode="forward"):
 
 
 if __name__ == "__main__":
-    print(mass_translate_coordinate_ntu_to_gp(['1000','10','50']))
-    print(translate_from_ntumaps_to_googlemaps("200","lat"))
+    print(mass_translate_coordinate_ntu_to_gp(['1000', '10', '50']))
+    print(translate_from_ntumaps_to_googlemaps("200", "lat"))
     print("start_____________________________________________________________________________________")
-    start = "nie"
+    start = "s1"
     end = "s2"
 
     # get_listed_instructions("http://maps.ntu.edu.sg/m?q=S2&sch_btn=Go&font=+m&t=+Designated+Smoking+Area+2+-+Nanyang+Executive+Centre")
