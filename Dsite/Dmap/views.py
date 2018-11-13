@@ -51,25 +51,30 @@ def routeInfo(request):
 			mode = request.POST['mode']
 
 			search_result = search(start, end, mode)
-			print("type from view22")
+
 			locations = search_result[0]
-			print(type(locations))
+			# print(type(locations))
 			# print("HAHA")
-			print(locations)
-			locations = ",".join(locations)
+			# print(locations)
+			# locations = ",".join(locations)
 
-			print("after concantenation")
-			print(locations)
-			print(type(locations))
-
-			print(locations)
+			# print("after concantenation")
+			# print(locations)
+			# print(type(locations))
+			#
+			# print(locations)
 			# print(type(output[1]))
-			landmarks_list, landmarks_coordinates = get_key_landmarks(locations)
-			# print(type(landmarks_list))
-			print(type(landmarks_list))
-			print(type(landmarks_coordinates))
-			response = locations + "l" + landmarks_list + "lc" + landmarks_coordinates
-			print(response)
+
+			directions = search_result[1]
+			landmarks_list, landmarks_coordinates = get_key_landmarks(directions)
+
+			print("getting landmarks info")
+
+			locations = ",".join(locations)
+			response = locations + "*" + landmarks_list + "&" + landmarks_coordinates
+			# response = locations
+			# print(response)
+			print("end of landmarks info")
 
 			return HttpResponse(response)
 		# Perform normal search from start until it
@@ -124,20 +129,20 @@ def index(request):
 #
 
 
-def vote(request, question_id):
-	question = get_object_or_404(Question, pk=question_id)
-	try:
-		selected_choice = question.choice_set.get(pk=request.POST['choice'])
-	except (KeyError, Choice.DoesNotExist):
-		# Redisplay the question voting form.
-		return render(request, 'polls/detail.html', {
-			'question': question,
-			'error_message': "You didn't select a choice.",
-		})
-	else:
-		selected_choice.votes += 1
-		selected_choice.save()
-		# Always return an HttpResponseRedirect after successfully dealing
-		# with POST data. This prevents data from being posted twice if a
-		# user hits the Back button.
-		return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+# def vote(request, question_id):
+# 	question = get_object_or_404(Question, pk=question_id)
+# 	try:
+# 		selected_choice = question.choice_set.get(pk=request.POST['choice'])
+# 	except (KeyError, Choice.DoesNotExist):
+# 		# Redisplay the question voting form.
+# 		return render(request, 'polls/detail.html', {
+# 			'question': question,
+# 			'error_message': "You didn't select a choice.",
+# 		})
+# 	else:
+# 		selected_choice.votes += 1
+# 		selected_choice.save()
+# 		# Always return an HttpResponseRedirect after successfully dealing
+# 		# with POST data. This prevents data from being posted twice if a
+# 		# user hits the Back button.
+# 		return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
