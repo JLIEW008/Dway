@@ -14,9 +14,9 @@ def get_key_landmarks(directions_list):
     direction_string =" ".join(directions_list)
     landmarks_list = []
     landmarks_coordinates = []
-    if direction_string.find("carpark 2")> -1 and direction_string.find("nie")> -1:
+    if direction_string.find("carpark 2")== -1 and direction_string.find("NIE")> -1:
         landmarks_list.append("nie bridge is a key landmark")
-        landmarks_coordinates.append("1.34756436621, 103.67948109701")
+        landmarks_coordinates.append("1.347841,103.680652")
     if direction_string.find("South Spine")> -1 and direction_string.find("North Spine")> -1:
         landmarks_list.append("south to north spine lift")
         landmarks_coordinates.append("1.34385336621, 103.68079609701")
@@ -26,6 +26,9 @@ def get_key_landmarks(directions_list):
     if direction_string.find("South Spine")> -1:
         landmarks_list.append("South Spine carpark")
         landmarks_coordinates.append("1.34323336621, 103.68146009701")
+    if direction_string.find("South Spine") > -1 and direction_string.find("Continue on North Spin")> -1 :
+        landmarks_list.append("coffe bean")
+        landmarks_coordinates.append("later")
     return landmarks_list[0:3],landmarks_coordinates[0:3]
 
 
@@ -401,8 +404,8 @@ if __name__ == "__main__":
     print(mass_translate_coordinate_ntu_to_gp(['1000','10','50']))
     print(translate_from_ntumaps_to_googlemaps("200","lat"))
     print("start_____________________________________________________________________________________")
-    start = "pioneer mrt"
-    end = "cee"
+    start = "nie"
+    end = "s2"
 
     # get_listed_instructions("http://maps.ntu.edu.sg/m?q=S2&sch_btn=Go&font=+m&t=+Designated+Smoking+Area+2+-+Nanyang+Executive+Centre")
     # print("i return:")
