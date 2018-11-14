@@ -71,7 +71,8 @@ def routeInfo(request):
 			print("getting landmarks info")
 
 			locations = ",".join(locations)
-			response = locations + "*" + landmarks_list + "&" + landmarks_coordinates
+			directions = ",".join(directions)
+			response = locations + "*" + directions +"*" + landmarks_list + "*" + landmarks_coordinates
 			# response = locations
 			# print(response)
 			print("end of landmarks info")

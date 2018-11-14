@@ -6,6 +6,7 @@ var defaultCenter = {
     lng: 103.68089499999999
 };
 var responseArray = [];
+var directionArray =[];
 var landmarks_name = [];
 var landmarks_coordinates= [];
 var landmarks_labels =[];
@@ -177,14 +178,19 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
         console.log(responseArray);
         //
         //
-        landmarks = response[1];
-        // console.log(landmarks);
-        landmarks= landmarks.split('&');
+        directionArray = response[1];
+        directionArray = directionArray.split(",");
+        console.log(directionArray);
+        // landmarks = response[1];
 
-        landmarks_name = landmarks[0];
+        // console.log(landmarks);
+        // landmarks = response[2]
+        // landmarks= landmarks.split('&');
+
+        landmarks_name = response[2];
         landmarks_name =  landmarks_name.split(",");
         console.log(landmarks_name);
-        landmarks_coordinates = landmarks[1];
+        landmarks_coordinates = response[3];
         landmarks_coordinates = landmarks_coordinates.split(",");
         console.log(landmarks_coordinates);
         // responseArray = result.split(",");
@@ -192,8 +198,11 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay){
 
         // responseArray = result.split(",");
         // console.log(responseArray);
+
+
         updateLandmark();
         updatePath();
+        updateDirections();
     });
 
         //latLngArray = new google.maps.LatLng(parseFloat(responseArray[0]),parseFloat(responseArray[1]));
@@ -288,6 +297,25 @@ function updatePath(){
     // });
     google.maps.event.trigger(map, 'resize');
 
+}
+
+function updateDirections(){
+    direction_bar = document.getElementById("directions")
+
+    var full_html = "";
+
+    //Todo: iterate
+    for(var i = 0; i < directionArray.length; i++) {
+        var direction = directionArray[i];
+        var direction_string = '<li class="list-group-item">' + direction + '</li>';
+        full_html += direction_string;
+    }
+
+
+
+    direction_bar.innerHTML = full_html;
+    console.log(direction_string);
+    // direction_bar.add(direction_string);
 }
 
 function removePath(){
